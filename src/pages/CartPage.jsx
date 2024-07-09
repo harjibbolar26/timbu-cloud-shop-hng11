@@ -12,6 +12,7 @@ import {
   Stack,
   Collapse,
   alpha,
+  TextField,
 } from "@mui/material";
 import SellIcon from "@mui/icons-material/Sell";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
@@ -28,8 +29,21 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const CartPage = () => {
-  const { cart, updateQuantity, removeFromCart, expanded, toggleSection } =
-    useStore();
+  const {
+    cart,
+    updateQuantity,
+    removeFromCart,
+    expanded,
+    toggleSection,
+    isEditing,
+    home,
+    phone,
+    address,
+    toggleEditMode,
+    handleHomeChange,
+    handleAddressChange,
+    handlePhoneChange,
+  } = useStore();
   const navigate = useNavigate();
 
   const calculateTotal = () => {
@@ -174,12 +188,24 @@ const CartPage = () => {
                       gap={{ xs: 1, md: 2 }}
                     >
                       <HomeOutlined />
-                      <Typography
-                        fontWeight={500}
-                        fontSize={{ xs: "12px", md: "15px" }}
-                      >
-                        Home
-                      </Typography>
+                      {isEditing ? (
+                        <TextField
+                          value={home}
+                          onChange={handleHomeChange}
+                          size="small"
+                          sx={{
+                            fontSize: { xs: "12px", md: "15px" },
+                            width: "100%", border: "none", p:0
+                          }}
+                        />
+                      ) : (
+                        <Typography
+                          fontWeight={500}
+                          fontSize={{ xs: "12px", md: "15px" }}
+                        >
+                          {home}
+                        </Typography>
+                      )}
                     </Stack>
                     <Stack
                       direction={"row"}
@@ -187,12 +213,21 @@ const CartPage = () => {
                       gap={{ xs: 1, md: 2 }}
                     >
                       <LocalPhoneRounded />
-                      <Typography
-                        fontWeight={500}
-                        fontSize={{ xs: "12px", md: "15px" }}
-                      >
-                        (+234)7010901695
-                      </Typography>
+                      {isEditing ? (
+                        <TextField
+                          value={phone}
+                          onChange={handlePhoneChange}
+                          size="small"
+                          sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                        />
+                      ) : (
+                        <Typography
+                          fontWeight={500}
+                          fontSize={{ xs: "12px", md: "15px" }}
+                        >
+                          {phone}
+                        </Typography>
+                      )}
                     </Stack>
                     <Stack
                       direction={"row"}
@@ -200,20 +235,34 @@ const CartPage = () => {
                       gap={{ xs: 1, md: 2 }}
                     >
                       <LocationOnRounded />
-                      <Typography
-                        fontWeight={500}
-                        fontSize={{ xs: "12px", md: "15px" }}
-                      >
-                        1234, Heaven&apos;s Street
-                      </Typography>
+                      {isEditing ? (
+                        <TextField
+                          value={address}
+                          onChange={handleAddressChange}
+                          size="small"
+                          sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                        />
+                      ) : (
+                        <Typography
+                          fontWeight={500}
+                          fontSize={{ xs: "12px", md: "15px" }}
+                        >
+                          {address}
+                        </Typography>
+                      )}
                     </Stack>
                   </Stack>
-                  <Typography
-                    fontSize={{ xs: "12px", lg: "15px" }}
-                    sx={{ cursor: "pointer", ":hover": { color: "blue" } }}
+                  <IconButton
+                    onClick={toggleEditMode}
+                    sx={{ alignSelf: "flex-end" }}
                   >
-                    Change
-                  </Typography>
+                    <Typography
+                      fontSize={{ xs: "12px", lg: "15px" }}
+                      sx={{ cursor: "pointer", ":hover": { color: "blue" } }}
+                    >
+                      Change
+                    </Typography>
+                  </IconButton>
                 </Stack>
               </Box>
             </Box>
@@ -614,6 +663,33 @@ const CartPage = () => {
                 </Box>
               </Stack>
               <hr />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  mt: 2,
+                }}
+              >
+                <Button
+                  variant="outlined"
+                  sx={{
+                    border: "none",
+                    bgcolor: "#F9DD49",
+                    fontSize: "16px",
+                    fontWeight: 500,
+                    width: "100%",
+                    py: 1,
+                    borderRadius: "10px",
+                    color: "#000",
+                  }}
+                  disabled={cart.length === 0}
+                  onClick={() => navigate("/checkout")}
+                >
+                  Start Checkout
+                </Button>
+              </Box>
             </Box>
           </Stack>
         </Box>

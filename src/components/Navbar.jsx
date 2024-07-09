@@ -1,16 +1,25 @@
 import React from "react";
 import { Search, Close, HomeOutlined } from "@mui/icons-material";
-import { alpha, Box, Card, Stack, Typography, Link as MuiLink } from "@mui/material";
+import {
+  alpha,
+  Box,
+  Card,
+  Stack,
+  Typography,
+  Link as MuiLink,
+} from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useStore } from "./StoreContext";
 
 const Navbar = () => {
   const location = useLocation();
-  const navigation = useNavigate()
+  const navigation = useNavigate();
   const isXs = useMediaQuery((theme) => theme.breakpoints.down(450));
+  const { searchQuery, handleSearchChange, handleClearSearch } = useStore();
   return (
     <Card
       elevation={0}
@@ -24,7 +33,7 @@ const Navbar = () => {
         top: 0,
         width: "100%",
         zIndex: 10,
-        height: { xs: 70, sm: 80, ss:100, md: 144 },
+        height: { xs: 70, sm: 80, ss: 100, md: 144 },
         padding: "auto",
         borderBottom: "1px solid #00000047",
       }}
@@ -69,10 +78,13 @@ const Navbar = () => {
               background: "transparent",
               display: { xs: "none", ss: "block" },
             }}
-            // value={searchQuery}
-            // onChange={handleSearchChange}
+            value={searchQuery}
+            onChange={handleSearchChange}
           />
-          <Close sx={{ display: { xs: "none", ss: "block" } }} />
+          <Close
+            onClick={handleClearSearch}
+            sx={{ display: { xs: "none", ss: "block" } }}
+          />
         </Stack>
         <Stack
           direction={"row"}
@@ -90,20 +102,22 @@ const Navbar = () => {
             }}
           >
             <MuiLink
-            component={Link}
+              component={Link}
               to={location.pathname === "/" ? "/cart" : "/"}
               sx={{
-                fontSize: { xs: "10px", ss:"12px", md: "16px" },
+                fontSize: { xs: "10px", ss: "12px", md: "16px" },
                 fontWeight: 400,
                 textDecoration: "none",
                 color: "#000",
                 display: "flex",
-                gap: {xs: 2, md:6},
+                gap: { xs: 2, md: 2 },
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              {!isXs && (location.pathname === "/" ? "Your Cart" : "Home")}
+              <Typography fontSize={{ xs: "10px", ss: "12px", md: "16px" }}>
+                {!isXs && (location.pathname === "/" ? "Your Cart" : "Home")}
+              </Typography>
               {location.pathname === "/" ? (
                 <ShoppingCartIcon />
               ) : (
@@ -121,7 +135,7 @@ const Navbar = () => {
             }}
           >
             <MuiLink
-            component={Link}
+              component={Link}
               to={location.pathname === "/checkout" ? "/cart" : "/checkout"}
               sx={{
                 fontSize: { xs: "10px", md: "16px" },
@@ -129,14 +143,13 @@ const Navbar = () => {
                 textDecoration: "none",
                 color: "#000",
                 display: "flex",
-                gap: {xs: 2, md:6},
+                gap: { xs: 2, md: 6 },
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              {!isXs && (location.pathname === "/checkout"
-                ? "Your Cart"
-                : "Checkout")}
+              {!isXs &&
+                (location.pathname === "/checkout" ? "Your Cart" : "Checkout")}
               {location.pathname === "/checkout" ? (
                 <ShoppingCartIcon />
               ) : (

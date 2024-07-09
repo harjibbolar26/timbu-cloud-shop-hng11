@@ -13,8 +13,11 @@ import {
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useStore } from "./StoreContext";
 
-const ItemCard = ({ item, addToCart }) => {
+const ItemCard = ({ item, addToCart, index }) => {
+  const { toggleFavorite, isFavorite } = useStore();
   const navigate = useNavigate();
   return (
     <Card
@@ -97,6 +100,53 @@ const ItemCard = ({ item, addToCart }) => {
           </IconButton>
         </Stack>
       </CardContent>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          sx={{
+            position: "absolute",
+            top: 10,
+            // height: { xs: "100px", ss: "134px" },
+            // bgcolor: "#fff",
+            width: "80%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            // zIndex: 20,
+          }}
+        >
+          <Typography
+            fontSize={"12px"}
+            bgcolor={item.bgColor}
+            p={"5px"}
+            color={"#FFF"}
+            borderRadius={1}
+          >
+            New
+          </Typography>
+          <Box sx={{ color: isFavorite ? "red" : "white" }}>
+            <IconButton onClick={toggleFavorite}></IconButton>
+            <FavoriteIcon
+              onClick={() => toggleFavorite(index)}
+              sx={{
+                bgcolor: item.bgColor,
+                borderRadius: "50%",
+                p: "5px",
+                fontSize: "25px",
+              }}
+            />
+          </Box>
+        </Stack>
+      </Box>
     </Card>
   );
 };

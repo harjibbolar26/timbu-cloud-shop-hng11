@@ -9,15 +9,20 @@ import {
   Slider,
   Collapse,
   IconButton,
+  useMediaQuery,
+  Drawer,
 } from "@mui/material";
 import {
   KeyboardArrowUp,
   KeyboardArrowDown,
   Delete,
   DeleteForever,
+  Close,
+  Menu,
 } from "@mui/icons-material";
 import { useStore } from "./StoreContext";
 import { Link } from "react-router-dom";
+import { useTheme } from "@emotion/react";
 
 const category = [
   { label: "T-shirt" },
@@ -48,9 +53,16 @@ const colour = [
 ];
 
 const Sidebar = () => {
-  const { price, handlePriceChange, expanded, toggleSection } = useStore();
+  const {
+    price,
+    handlePriceChange,
+    expanded,
+    toggleSection,
+    isSidebarOpen,
+    toggleSidebar,
+  } = useStore();
 
-  return (
+  const SidebarContent = () => (
     <Box
       component={"nav"}
       sx={{
@@ -59,6 +71,7 @@ const Sidebar = () => {
         // height: "100%",
         overflowY: "auto",
         paddingY: "20px",
+        paddingX: "20px",
         scrollbarWidth: "none",
         "&::-webkit-scrollbar": {
           display: "none",
@@ -201,7 +214,6 @@ const Sidebar = () => {
           <Box
             sx={{
               paddingLeft: "20px",
-              
             }}
           >
             <Stack
@@ -221,7 +233,7 @@ const Sidebar = () => {
                 )}
               </IconButton>
             </Stack>
-            <Collapse in={expanded.price} sx={{paddingRight: "20px"}}>
+            <Collapse in={expanded.price} sx={{ paddingRight: "20px" }}>
               <Slider
                 value={price}
                 onChange={handlePriceChange}
@@ -333,6 +345,46 @@ const Sidebar = () => {
         </Box>
       </Box>
     </Box>
+  );
+  const theme = useTheme();
+  const isBigScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  return (
+    // <>
+    //   {isBigScreen ? (
+    //     <Box component={"nav"}>{<SidebarContent />}</Box>
+    //   ) : (
+    //     <>
+    //       <IconButton
+    //         onClick={toggleSidebar}
+    //         sx={{ position: "fixed", top: 150, left: 20, m: 4, zIndex: 1000  }}
+    //       >
+    //         <Menu />
+    //       </IconButton>
+    //       <Drawer
+    //         anchor="left"
+    //         open={isSidebarOpen}
+    //         onClose={toggleSidebar}
+    //         PaperProps={{ sx: { width: "250px" } }}
+    //         ModalProps={{
+    //           BackdropProps: {
+    //             sx: {
+    //               backdropFilter: "blur(4px)",
+    //             },
+    //           },
+    //         }}
+    //       >
+    //         <IconButton
+    //           onClick={toggleSidebar}
+    //           sx={{ position: "fixed", top: 20, left: 20 }}
+    //         >
+    //           <Close />
+    //         </IconButton>
+    //         <SidebarContent />
+    //       </Drawer>
+    //     </>
+    //   )}
+    // </>
+    <SidebarContent/>
   );
 };
 

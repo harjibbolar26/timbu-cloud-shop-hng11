@@ -1,20 +1,38 @@
 import React from "react";
 import ItemCard from "../components/ItemCard";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  Drawer,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { useStore } from "../components/StoreContext";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { HomeOutlined, KeyboardArrowRight, Close, Menu } from "@mui/icons-material";
+import {
+  Close,
+  HomeOutlined,
+  KeyboardArrowRight,
+  
+} from "@mui/icons-material";
 import { alpha } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const Home = ({ items }) => {
   const { addToCart } = useStore();
+  
   return (
     <Box sx={{ overflowX: "hidden" }}>
       <Navbar />
       <Stack direction={"row"}>
+        <Sidebar />
         {/* <Box
           sx={{
             width: "300px",
@@ -22,12 +40,11 @@ const Home = ({ items }) => {
           }}
         >
         </Box> */}
-        <Sidebar />
         <Stack sx={{ width: "100%", overflowX: "hidden" }}>
           <Stack
             sx={{
               overflowY: "auto",
-              marginTop: {xs: 13, ss:20},
+              marginTop: { xs: 13, ss: 20 },
               marginLeft: 3,
             }}
           >
@@ -98,7 +115,7 @@ const Home = ({ items }) => {
                 Tote bags
               </Typography>
             </Box>
-            <Box sx={{ marginY: 3 }}>
+            <Box sx={{ marginY: 5 }}>
               <Stack
                 direction={"row"}
                 justifyContent={"start"}
@@ -204,8 +221,9 @@ const Home = ({ items }) => {
               spacing={5}
               justifyContent="center"
               sx={{ paddingY: "50px" }}
+              bgcolor={"#fff"}
             >
-              {items.map((item) => (
+              {items.map((item, index) => (
                 <Grid
                   item
                   lg={4}
@@ -215,7 +233,7 @@ const Home = ({ items }) => {
                   key={item.id}
                   // sx={{ width: "20px" }}
                 >
-                  <ItemCard item={item} addToCart={addToCart} />
+                  <ItemCard item={item} addToCart={addToCart} index={index}/>
                 </Grid>
               ))}
             </Grid>
@@ -329,6 +347,41 @@ const Home = ({ items }) => {
         </Stack>
       </Stack>
       <Footer />
+      {/* <>
+        {isLargeScreen ? (
+          <Box component={"nav"}>{<Sidebar />}</Box>
+        ) : (
+          <>
+            <IconButton
+              onClick={toggleSidebar}
+              sx={{ position: "fixed", top: 50, left: 20 }}
+            >
+              <Menu />
+            </IconButton>
+            <Drawer
+              anchor="left"
+              open={isSidebarOpen}
+              onClose={toggleSidebar}
+              PaperProps={{ sx: { width: "250px" } }}
+              ModalProps={{
+                BackdropProps: {
+                  sx: {
+                    backdropFilter: "blur(4px)",
+                  },
+                },
+              }}
+            >
+              <IconButton
+                onClick={toggleSidebar}
+                sx={{ position: "fixed", top: 20, left: 20 }}
+              >
+                <Close />
+              </IconButton>
+              <Sidebar />
+            </Drawer>
+          </>
+        )}
+      </> */}
     </Box>
   );
 };

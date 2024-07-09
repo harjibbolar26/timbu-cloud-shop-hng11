@@ -53,6 +53,7 @@ export const StoreProvider = ({ children }) => {
       }
     });
     // navigate("/cart");
+    alert("Item added to cart");
   };
 
   const updateQuantity = (itemToUpdate, change) => {
@@ -81,6 +82,51 @@ export const StoreProvider = ({ children }) => {
     setPrice(newPrice);
   };
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(prevState => !prevState);
+    console.log('Toggled sidebar');
+    // alert("ok")
+  };
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [home, setHome] = useState("Home");
+  const [phone, setPhone] = useState("(+234)7010901695");
+  const [address, setAddress] = useState("1234, Heaven's Street");
+
+  const toggleEditMode = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleHomeChange = (event) => {
+    setHome(event.target.value);
+  };
+
+  const handlePhoneChange = (event) => {
+    setPhone(event.target.value);
+  };
+
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
+
+    const [isFavorite, setIsFavorite] = useState(0);
+  
+    const toggleFavorite = (index) => {
+      setIsFavorite((index));
+    };
+
   return (
     <StoreContext.Provider
       value={{
@@ -99,6 +145,19 @@ export const StoreProvider = ({ children }) => {
         selectedIndex,
         selectedPaymentIndex,
         handlePaymentChange,
+        setIsSidebarOpen,
+        toggleSidebar,
+        searchQuery,
+        handleSearchChange,
+        handleClearSearch,
+        isEditing,
+        home,
+        phone,
+        address,
+        toggleEditMode,
+        handleHomeChange,
+        handleAddressChange,
+        handlePhoneChange, isFavorite, toggleFavorite
       }}
     >
       {children}
