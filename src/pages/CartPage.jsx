@@ -622,7 +622,7 @@ const CartPage = () => {
                 </Box>
                 <Box>
                   <Typography fontSize={"16px"} fontWeight={400}>
-                    {otherDeliveryFees}
+                    {calculateTotal()}
                   </Typography>
                 </Box>
               </Stack>
@@ -635,7 +635,7 @@ const CartPage = () => {
               >
                 <Box>
                   <Typography fontSize={"16px"} fontWeight={400}>
-                    Discount
+                    Charges
                   </Typography>
                 </Box>
                 <Box>
@@ -664,6 +664,21 @@ const CartPage = () => {
               </Stack>
               <hr />
               <Box
+              sx={{
+                width: "100%",
+                mt: 2,
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              <Stack direction={"row"} justifyContent={"space-between"}>
+                <Typography fontSize={"16px"} fontWeight={500}>
+                  Total
+                </Typography>
+                <Typography fontSize={"16px"} fontWeight={500}>
+                  &#8358; {calculateTotal() + otherDeliveryFees}
+                </Typography>
+              </Stack>
+              <Box
                 sx={{
                   display: "flex",
                   justifyContent: "center",
@@ -685,11 +700,11 @@ const CartPage = () => {
                     color: "#000",
                   }}
                   disabled={cart.length === 0}
-                  onClick={() => navigate("/checkout")}
                 >
                   Start Checkout
                 </Button>
               </Box>
+            </Box>
             </Box>
           </Stack>
         </Box>
