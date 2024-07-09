@@ -220,7 +220,7 @@ const Home = ({ items }) => {
               container
               spacing={5}
               justifyContent="center"
-              sx={{ paddingY: "50px" }}
+              sx={{ paddingY: "50px", paddingRight: "40px" }}
               bgcolor={"#fff"}
             >
               {items.map((item, index) => (

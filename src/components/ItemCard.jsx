@@ -19,6 +19,7 @@ import { useStore } from "./StoreContext";
 const ItemCard = ({ item, addToCart, index }) => {
   const { toggleFavorite, isFavorite } = useStore();
   const navigate = useNavigate();
+  const favorite = isFavorite[item.id] || false;
   return (
     <Card
       sx={{
@@ -133,10 +134,10 @@ const ItemCard = ({ item, addToCart, index }) => {
           >
             New
           </Typography>
-          <Box sx={{ color: isFavorite ? "red" : "white" }}>
+          <Box sx={{ color: favorite ? "red" : "white" }}>
             <IconButton onClick={toggleFavorite}></IconButton>
             <FavoriteIcon
-              onClick={() => toggleFavorite(index)}
+              onClick={() => toggleFavorite(item.id)}
               sx={{
                 bgcolor: item.bgColor,
                 borderRadius: "50%",

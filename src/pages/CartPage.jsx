@@ -700,6 +700,7 @@ const CartPage = () => {
                     color: "#000",
                   }}
                   disabled={cart.length === 0}
+                  onClick={() => navigate("/checkout")}
                 >
                   Start Checkout
                 </Button>

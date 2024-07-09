@@ -115,9 +115,10 @@ const Navbar = () => {
                 alignItems: "center",
               }}
             >
-              <Typography fontSize={{ xs: "10px", ss: "12px", md: "16px" }}>
-                {!isXs && (location.pathname === "/" ? "Your Cart" : "Home")}
-              </Typography>
+              {/* <Typography
+                fontSize={{ xs: "10px", ss: "12px", md: "16px" }}
+              ></Typography> */}
+              {!isXs && (location.pathname === "/" ? "Your Cart" : "Home")}
               {location.pathname === "/" ? (
                 <ShoppingCartIcon />
               ) : (

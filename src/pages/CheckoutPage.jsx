@@ -29,6 +29,8 @@ import {
   HomeOutlined,
   LocalPhoneRounded,
   LocationOnRounded,
+  Edit,
+  Check,
 } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -42,7 +44,8 @@ const Checkout = () => {
     handleChange,
     selectedIndex,
     selectedPaymentIndex,
-    handlePaymentChange,isEditing,
+    handlePaymentChange,
+    isEditing,
     home,
     phone,
     address,
@@ -50,6 +53,16 @@ const Checkout = () => {
     handleHomeChange,
     handleAddressChange,
     handlePhoneChange,
+    firstName,
+    lastName,
+    phoneNumber,
+    email,
+    editUserInfo,
+    toggleEditUserInfo,
+    handleFirstNameChange,
+    handleLastNameChange,
+    handlePhoneNumberChange,
+    handleEmailChange,
   } = useStore();
   const navigate = useNavigate();
 
@@ -155,22 +168,50 @@ const Checkout = () => {
                         }}
                       >
                         <Box
-                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                          sx={{
+                            display: "flex",
+                            alignItems: "end",
+                            justifyContent: "space-between",
+                            gap: 1,
+                          }}
                         >
-                          <PersonOutlineIcon
-                            sx={{ fontSize: { xs: "50px", md: "60px" } }}
-                          />
-                          <Stack>
-                            <Typography fontSize={"16px"} fontWeight={275}>
-                              First Name
-                            </Typography>
-                            <Typography
-                              fontSize={{ xs: "18px", md: "24px" }}
-                              fontWeight={400}
-                            >
-                              Promise
-                            </Typography>
-                          </Stack>
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <PersonOutlineIcon
+                              sx={{ fontSize: { xs: "50px", md: "60px" } }}
+                            />
+                            <Stack>
+                              <Typography fontSize={"16px"} fontWeight={275}>
+                                First Name
+                              </Typography>
+                              {editUserInfo ? (
+                                <TextField
+                                  value={firstName}
+                                  onChange={handleFirstNameChange}
+                                  size="small"
+                                  sx={{
+                                    fontSize: { xs: "18px", md: "24px" },
+                                    width: "100%",
+                                    border: "none",
+                                    mb: 1,
+                                  }}
+                                />
+                              ) : (
+                                <Typography
+                                  fontWeight={500}
+                                  fontSize={{ xs: "18px", md: "24px" }}
+                                >
+                                  {firstName}
+                                </Typography>
+                              )}
+                            </Stack>
+                          </Box>
+                          <IconButton onClick={toggleEditUserInfo}>
+                            {editUserInfo ? (
+                              <Check sx={{ fontSize: "20px" }} />
+                            ) : (
+                              <Edit sx={{ fontSize: "20px" }} />
+                            )}
+                          </IconButton>
                         </Box>
                         <hr
                           style={{
@@ -195,22 +236,50 @@ const Checkout = () => {
                         }}
                       >
                         <Box
-                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 1,
+                          }}
                         >
-                          <PeopleAltOutlinedIcon
-                            sx={{ fontSize: { xs: "50px", md: "60px" } }}
-                          />
-                          <Stack>
-                            <Typography fontSize={"16px"} fontWeight={275}>
-                              Last Name
-                            </Typography>
-                            <Typography
-                              fontSize={{ xs: "18px", md: "24px" }}
-                              fontWeight={400}
-                            >
-                              Enwelum
-                            </Typography>
-                          </Stack>
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <PeopleAltOutlinedIcon
+                              sx={{ fontSize: { xs: "50px", md: "60px" } }}
+                            />
+                            <Stack>
+                              <Typography fontSize={"16px"} fontWeight={275}>
+                                Last Name
+                              </Typography>
+                              {editUserInfo ? (
+                                <TextField
+                                  value={lastName}
+                                  onChange={handleLastNameChange}
+                                  size="small"
+                                  sx={{
+                                    fontSize: { xs: "18px", md: "24px" },
+                                    width: "100%",
+                                    border: "none",
+                                    mb: 1,
+                                  }}
+                                />
+                              ) : (
+                                <Typography
+                                  fontWeight={500}
+                                  fontSize={{ xs: "18px", md: "24px" }}
+                                >
+                                  {lastName}
+                                </Typography>
+                              )}
+                            </Stack>
+                          </Box>
+                          <IconButton onClick={toggleEditUserInfo}>
+                            {editUserInfo ? (
+                              <Check sx={{ fontSize: "20px" }} />
+                            ) : (
+                              <Edit sx={{ fontSize: "20px" }} />
+                            )}
+                          </IconButton>
                         </Box>
                         <hr
                           style={{
@@ -235,22 +304,50 @@ const Checkout = () => {
                         }}
                       >
                         <Box
-                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 1,
+                          }}
                         >
-                          <CallRoundedIcon
-                            sx={{ fontSize: { xs: "50px", md: "60px" } }}
-                          />
-                          <Stack>
-                            <Typography fontSize={"16px"} fontWeight={275}>
-                              Phone Number
-                            </Typography>
-                            <Typography
-                              fontSize={{ xs: "18px", md: "24px" }}
-                              fontWeight={400}
-                            >
-                              (+234) 7010901695
-                            </Typography>
-                          </Stack>
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <CallRoundedIcon
+                              sx={{ fontSize: { xs: "50px", md: "60px" } }}
+                            />
+                            <Stack>
+                              <Typography fontSize={"16px"} fontWeight={275}>
+                                Phone Number
+                              </Typography>
+                              {editUserInfo ? (
+                                <TextField
+                                  value={phoneNumber}
+                                  onChange={handlePhoneNumberChange}
+                                  size="small"
+                                  sx={{
+                                    fontSize: { xs: "18px", md: "24px" },
+                                    width: "100%",
+                                    border: "none",
+                                    mb: 1,
+                                  }}
+                                />
+                              ) : (
+                                <Typography
+                                  fontWeight={500}
+                                  fontSize={{ xs: "18px", md: "24px" }}
+                                >
+                                  {phoneNumber}
+                                </Typography>
+                              )}
+                            </Stack>
+                          </Box>
+                          <IconButton onClick={toggleEditUserInfo}>
+                            {editUserInfo ? (
+                              <Check sx={{ fontSize: "20px" }} />
+                            ) : (
+                              <Edit sx={{ fontSize: "20px" }} />
+                            )}
+                          </IconButton>
                         </Box>
                         <hr
                           style={{
@@ -275,22 +372,50 @@ const Checkout = () => {
                         }}
                       >
                         <Box
-                          sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 1,
+                          }}
                         >
-                          <EmailIcon
-                            sx={{ fontSize: { xs: "50px", md: "60px" } }}
-                          />
-                          <Stack>
-                            <Typography fontSize={"16px"} fontWeight={275}>
-                              Mail
-                            </Typography>
-                            <Typography
-                              fontSize={{ xs: "18px", md: "24px" }}
-                              fontWeight={400}
-                            >
-                              hotgirl@gmail.com
-                            </Typography>
-                          </Stack>
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <EmailIcon
+                              sx={{ fontSize: { xs: "50px", md: "60px" } }}
+                            />
+                            <Stack>
+                              <Typography fontSize={"16px"} fontWeight={275}>
+                                Mail
+                              </Typography>
+                              {editUserInfo ? (
+                                <TextField
+                                  value={email}
+                                  onChange={handleEmailChange}
+                                  size="small"
+                                  sx={{
+                                    fontSize: { xs: "18px", md: "24px" },
+                                    width: "100%",
+                                    border: "none",
+                                    mb: 1,
+                                  }}
+                                />
+                              ) : (
+                                <Typography
+                                  fontWeight={500}
+                                  fontSize={{ xs: "18px", md: "24px" }}
+                                >
+                                  {email}
+                                </Typography>
+                              )}
+                            </Stack>
+                          </Box>
+                          <IconButton onClick={toggleEditUserInfo}>
+                            {editUserInfo ? (
+                              <Check sx={{ fontSize: "20px" }} />
+                            ) : (
+                              <Edit sx={{ fontSize: "20px" }} />
+                            )}
+                          </IconButton>
                         </Box>
                         <hr
                           style={{
@@ -447,94 +572,99 @@ const Checkout = () => {
                       margin={{ xs: 1.5, lg: 2 }}
                     >
                       <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  justifyContent={"space-between"}
-                  gap={2}
-                >
-                  <Stack direction={"column"} gap={2}>
-                    <Stack
-                      direction={"row"}
-                      alignItems={"center"}
-                      gap={{ xs: 1, md: 2 }}
-                    >
-                      <HomeOutlined />
-                      {isEditing ? (
-                        <TextField
-                          value={home}
-                          onChange={handleHomeChange}
-                          size="small"
-                          sx={{
-                            fontSize: { xs: "12px", md: "15px" },
-                            width: "100%", border: "none", p:0
-                          }}
-                        />
-                      ) : (
-                        <Typography
-                          fontWeight={500}
-                          fontSize={{ xs: "12px", md: "15px" }}
+                        direction={"row"}
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
+                        gap={2}
+                      >
+                        <Stack direction={"column"} gap={2}>
+                          <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            gap={{ xs: 1, md: 2 }}
+                          >
+                            <HomeOutlined />
+                            {isEditing ? (
+                              <TextField
+                                value={home}
+                                onChange={handleHomeChange}
+                                size="small"
+                                sx={{
+                                  fontSize: { xs: "12px", md: "15px" },
+                                  width: "100%",
+                                  border: "none",
+                                  p: 0,
+                                }}
+                              />
+                            ) : (
+                              <Typography
+                                fontWeight={500}
+                                fontSize={{ xs: "12px", md: "15px" }}
+                              >
+                                {home}
+                              </Typography>
+                            )}
+                          </Stack>
+                          <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            gap={{ xs: 1, md: 2 }}
+                          >
+                            <LocalPhoneRounded />
+                            {isEditing ? (
+                              <TextField
+                                value={phone}
+                                onChange={handlePhoneChange}
+                                size="small"
+                                sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                              />
+                            ) : (
+                              <Typography
+                                fontWeight={500}
+                                fontSize={{ xs: "12px", md: "15px" }}
+                              >
+                                {phone}
+                              </Typography>
+                            )}
+                          </Stack>
+                          <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            gap={{ xs: 1, md: 2 }}
+                          >
+                            <LocationOnRounded />
+                            {isEditing ? (
+                              <TextField
+                                value={address}
+                                onChange={handleAddressChange}
+                                size="small"
+                                sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                              />
+                            ) : (
+                              <Typography
+                                fontWeight={500}
+                                fontSize={{ xs: "12px", md: "15px" }}
+                              >
+                                {address}
+                              </Typography>
+                            )}
+                          </Stack>
+                        </Stack>
+                        <IconButton
+                          onClick={toggleEditMode}
+                          sx={{ alignSelf: "flex-end" }}
                         >
-                          {home}
-                        </Typography>
-                      )}
-                    </Stack>
-                    <Stack
-                      direction={"row"}
-                      alignItems={"center"}
-                      gap={{ xs: 1, md: 2 }}
-                    >
-                      <LocalPhoneRounded />
-                      {isEditing ? (
-                        <TextField
-                          value={phone}
-                          onChange={handlePhoneChange}
-                          size="small"
-                          sx={{ fontSize: { xs: "12px", md: "15px" } }}
-                        />
-                      ) : (
-                        <Typography
-                          fontWeight={500}
-                          fontSize={{ xs: "12px", md: "15px" }}
-                        >
-                          {phone}
-                        </Typography>
-                      )}
-                    </Stack>
-                    <Stack
-                      direction={"row"}
-                      alignItems={"center"}
-                      gap={{ xs: 1, md: 2 }}
-                    >
-                      <LocationOnRounded />
-                      {isEditing ? (
-                        <TextField
-                          value={address}
-                          onChange={handleAddressChange}
-                          size="small"
-                          sx={{ fontSize: { xs: "12px", md: "15px" } }}
-                        />
-                      ) : (
-                        <Typography
-                          fontWeight={500}
-                          fontSize={{ xs: "12px", md: "15px" }}
-                        >
-                          {address}
-                        </Typography>
-                      )}
-                    </Stack>
-                  </Stack>
-                  <IconButton
-                    onClick={toggleEditMode}
-                    sx={{ alignSelf: "flex-end" }}
-                  >
-                    <Typography
-                      fontSize={{ xs: "12px", lg: "15px" }}
-                      sx={{ cursor: "pointer", ":hover": { color: "blue" } }}
-                    >
-                      Change
-                    </Typography>
-                  </IconButton>
-                </Stack>
+                          <Typography
+                            fontSize={{ xs: "12px", lg: "15px" }}
+                            sx={{
+                              cursor: "pointer",
+                              ":hover": { color: "blue" },
+                            }}
+                          >
+                            {isEditing ? "Done" : "Change"}
+                          </Typography>
+                        </IconButton>
+                      </Stack>
                     </Box>
                   </Box>
                 </Box>
