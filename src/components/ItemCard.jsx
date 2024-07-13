@@ -21,7 +21,7 @@ const ItemCard = ({ item, addToCart, index }) => {
   const { toggleFavorite, isFavorite } = useStore();
   const navigate = useNavigate();
   const favorite = isFavorite[item.id] || false;
-  console.log(item.current_price[0].NGN[0]);
+  console.log(item);
   return (
     <Card
       sx={{

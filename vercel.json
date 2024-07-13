@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "https://api.timbu.clouc/$1"
+      },
+      {
+        "source": "/(.*)",
+        "destination": "index.html"
+      }
+    ]
+  }

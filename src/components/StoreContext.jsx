@@ -215,8 +215,8 @@ export const StoreProvider = ({ children }) => {
       setProduct(data);
       setMainImage(data.photos[3].url);
 
-      const extraInfo = await FetchSingleProduct(`extrainfo/products/${id}`);
-      setExtraData(extraInfo);
+      // const extraInfo = await FetchSingleProduct(`extrainfo/products/${id}`);
+      // setExtraData(extraInfo);
     } catch (error) {
       setError(error.message);
     } finally {
