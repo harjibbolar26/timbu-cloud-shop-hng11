@@ -77,6 +77,30 @@ const Navbar = () => {
               fontSize: { xs: "10px", ss: "14px" },
               background: "transparent",
               display: { xs: "none", ss: "block" },
+              "::MsClear": {
+                display: "none",
+                width: 0,
+                height: 0,
+              },
+              /* Hide the 'x' button in Edge */
+              "::MsReveal": {
+                display: "none",
+                width: 0,
+                height: 0,
+              },
+              /* Hide the 'x' button in Chrome, Safari, and Opera */
+              "::WebkitSearchDecoration": {
+                display: "none",
+              },
+              "::WebkitSearchCancelButton": {
+                display: "none",
+              },
+              "::WebkitSearchResultsButton": {
+                display: "none",
+              },
+              "::WebkitSearchResultsDecoration": {
+                display: "none",
+              },
             }}
             value={searchQuery}
             onChange={handleSearchChange}

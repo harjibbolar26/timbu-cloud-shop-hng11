@@ -10,6 +10,7 @@ import {
   Box,
   alpha,
   IconButton,
+  Link as MuiLink,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
@@ -20,30 +21,32 @@ const ItemCard = ({ item, addToCart, index }) => {
   const { toggleFavorite, isFavorite } = useStore();
   const navigate = useNavigate();
   const favorite = isFavorite[item.id] || false;
+  console.log(item.current_price[0].NGN[0]);
   return (
     <Card
       sx={{
         width: "100%",
+        height: { md: "450px", xs: "320px" },
         position: "relative",
-        borderRadius: "20px",
-        padding: 0,
+        borderRadius: "15px",
       }}
       elevation={3}
     >
       <CardMedia
         component="img"
-        image={item.image}
+        image={`https://api.timbu.cloud/images/${item.photos[0].url}`}
         alt={item.name}
         sx={{
           width: "100%",
-          p: 0,
+          height: "70%",
+          objectFit: "cover",
         }}
       />
       <CardContent
         sx={{
           position: "absolute",
           bottom: 0,
-          height: { xs: "100px", ss: "134px" },
+          height: { xs: "30%", ss: "134px" },
           bgcolor: "#fff",
           width: "100%",
         }}
@@ -51,12 +54,14 @@ const ItemCard = ({ item, addToCart, index }) => {
         <Typography
           sx={{
             color: "#000",
-            fontSize: { xs: "13px", ss: "21px" },
+            fontSize: { xs: "12px", ss: "21px" },
             fontWeight: 600,
             marginBottom: { xs: 1, ss: 2 },
           }}
         >
-          {item.name}
+          <MuiLink component={Link} to={`/products/${item.id}`}>
+            {item.name}
+          </MuiLink>
         </Typography>
 
         <Stack
@@ -82,22 +87,22 @@ const ItemCard = ({ item, addToCart, index }) => {
                 fontWeight: 600,
               }}
             >
-              ${item.price}
+              &#8358;{item.current_price[0].NGN[0]}
             </Typography>
           </Stack>
           <IconButton
             sx={{
               bgcolor: "#F9DD49",
               borderRadius: "10px",
-              width: { xs: 50, ss: 69 },
-              height: { xs: 40, ss: 56 },
+              width: { xs: 40, ss: 69 },
+              height: { xs: 30, ss: 56 },
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
             onClick={() => addToCart(item)}
           >
-            <ShoppingCartIcon sx={{ fontSize: { xs: "30px", ss: "40px" } }} />
+            <ShoppingCartIcon sx={{ fontSize: { xs: "20px", ss: "40px" } }} />
           </IconButton>
         </Stack>
       </CardContent>
@@ -122,7 +127,7 @@ const ItemCard = ({ item, addToCart, index }) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            // zIndex: 20,
+            marginBottom: 4
           }}
         >
           <Typography

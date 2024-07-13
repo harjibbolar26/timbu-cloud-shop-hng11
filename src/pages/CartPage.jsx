@@ -48,12 +48,14 @@ const CartPage = () => {
 
   const calculateTotal = () => {
     return cart.reduce(
-      (total, item) => total + (item.price - item.price * 0.3) * item.quantity,
+      (total, item) => total + (item.current_price[0].NGN[0] - item.current_price[0].NGN[0] * 0.3) * item.quantity,
       0
     );
   };
 
   const otherDeliveryFees = 800 + 400 + 400 + 200;
+
+  // console.log(cart);
 
   return (
     <Box sx={{ overflowX: "hidden" }}>
@@ -323,7 +325,7 @@ const CartPage = () => {
                 ) : (
                   <Stack direction="column" spacing={2}>
                     {cart.map((item) => {
-                      const discountPrice = item.price - 0.3 * item.price;
+                      const discountPrice = item.current_price[0].NGN[0] - 0.3 * item.current_price[0].NGN[0];
                       return (
                         <>
                           <Box
@@ -346,7 +348,7 @@ const CartPage = () => {
                             >
                               <Box
                                 component={"img"}
-                                src={item.image}
+                                src={`https://api.timbu.cloud/images/${item.photos[0].url}`}
                                 alt={item.name}
                                 sx={{
                                   height: { xs: 80, md: 130 },
@@ -446,7 +448,7 @@ const CartPage = () => {
                                 <span
                                   style={{ textDecoration: "line-through" }}
                                 >
-                                  &#8358; {item.price}
+                                  &#8358; {item.current_price[0].NGN[0]}
                                 </span>{" "}
                                 <Typography
                                   component="span"

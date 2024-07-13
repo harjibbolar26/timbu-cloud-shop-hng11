@@ -68,7 +68,10 @@ const Checkout = () => {
 
   const calculateTotal = () => {
     return cart.reduce(
-      (total, item) => total + (item.price - item.price * 0.3) * item.quantity,
+      (total, item) =>
+        total +
+        (item.current_price[0].NGN[0] - item.current_price[0].NGN[0] * 0.3) *
+          item.quantity,
       0
     );
     // .toFixed(2);
@@ -98,7 +101,6 @@ const Checkout = () => {
           <hr />
         </>
       ),
-      // label: "054887",
     },
   ];
 
@@ -144,13 +146,28 @@ const Checkout = () => {
               {/* One */}
               <Box sx={{ width: "100%" }}>
                 <Box>
-                  <Typography
-                    fontSize={{ xs: "20px", md: "30px" }}
-                    fontWeight={500}
-                    my={4}
+                  <Stack
+                    direction={"row"}
+                    justifyContent={"space-start"}
+                    alignItems={"center"}
+                    spacing={5}
+                    mb={1}
                   >
-                    1. Contact Information
-                  </Typography>
+                    <Typography
+                      fontSize={{ xs: "20px", md: "30px" }}
+                      fontWeight={500}
+                      my={4}
+                    >
+                      1. Contact Information
+                    </Typography>
+                    <IconButton onClick={toggleEditUserInfo}>
+                      {editUserInfo ? (
+                        <Check sx={{ fontSize: "20px" }} />
+                      ) : (
+                        <Edit sx={{ fontSize: "20px" }} />
+                      )}
+                    </IconButton>
+                  </Stack>
                   <Grid
                     container
                     gap={{ xs: 2, md: 4 }}
@@ -205,13 +222,7 @@ const Checkout = () => {
                               )}
                             </Stack>
                           </Box>
-                          <IconButton onClick={toggleEditUserInfo}>
-                            {editUserInfo ? (
-                              <Check sx={{ fontSize: "20px" }} />
-                            ) : (
-                              <Edit sx={{ fontSize: "20px" }} />
-                            )}
-                          </IconButton>
+                          
                         </Box>
                         <hr
                           style={{
@@ -273,13 +284,7 @@ const Checkout = () => {
                               )}
                             </Stack>
                           </Box>
-                          <IconButton onClick={toggleEditUserInfo}>
-                            {editUserInfo ? (
-                              <Check sx={{ fontSize: "20px" }} />
-                            ) : (
-                              <Edit sx={{ fontSize: "20px" }} />
-                            )}
-                          </IconButton>
+                          
                         </Box>
                         <hr
                           style={{
@@ -341,13 +346,7 @@ const Checkout = () => {
                               )}
                             </Stack>
                           </Box>
-                          <IconButton onClick={toggleEditUserInfo}>
-                            {editUserInfo ? (
-                              <Check sx={{ fontSize: "20px" }} />
-                            ) : (
-                              <Edit sx={{ fontSize: "20px" }} />
-                            )}
-                          </IconButton>
+                          
                         </Box>
                         <hr
                           style={{
@@ -409,13 +408,7 @@ const Checkout = () => {
                               )}
                             </Stack>
                           </Box>
-                          <IconButton onClick={toggleEditUserInfo}>
-                            {editUserInfo ? (
-                              <Check sx={{ fontSize: "20px" }} />
-                            ) : (
-                              <Edit sx={{ fontSize: "20px" }} />
-                            )}
-                          </IconButton>
+                          
                         </Box>
                         <hr
                           style={{

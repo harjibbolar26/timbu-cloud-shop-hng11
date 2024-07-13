@@ -1,12 +1,15 @@
 // src/CartContext.js
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { FetchProduct, FetchSingleProduct } from "../constants/fetch";
+// import FetchProduct from "../constants/fetch";
 
 const StoreContext = createContext();
 export const useStore = () => useContext(StoreContext);
 
 export const StoreProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
+    "";
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
@@ -22,7 +25,7 @@ export const StoreProvider = ({ children }) => {
   });
 
   const [price, setPrice] = useState([20, 80]);
-
+  const [products, setProducts] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedPaymentIndex, setSelectedPaymentIndex] = useState(0);
 
@@ -34,25 +37,35 @@ export const StoreProvider = ({ children }) => {
     setSelectedPaymentIndex(index);
   };
 
+  const updateProducts = (newProducts) => {
+    setProducts(newProducts);
+  };
+
   useEffect(() => {
+    // FetchProduct("products").then((data) => setCart(data.items));
+
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
+  // console.log(cart);
   const navigate = useNavigate();
 
   const addToCart = (item) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
+      const cartArray = prevCart || [];
+      const existingItem = cartArray.find(
+        (cartItem) => cartItem.id === item.id
+      );
       if (existingItem) {
-        return prevCart.map((cartItem) =>
+        return cartArray.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         );
       } else {
-        return [...prevCart, { ...item, quantity: 1 }];
+        return [...cartArray, { ...item, quantity: 1 }];
       }
     });
-    // navigate("/cart");
     alert("Item added to cart");
   };
 
@@ -145,10 +158,74 @@ export const StoreProvider = ({ children }) => {
   const [isFavorite, setIsFavorite] = useState({});
 
   const toggleFavorite = (itemId) => {
-    setIsFavorite(prevFavorites => ({
+    setIsFavorite((prevFavorites) => ({
       ...prevFavorites,
-      [itemId]: !prevFavorites[itemId]
+      [itemId]: !prevFavorites[itemId],
     }));
+  };
+
+  const [product, setProduct] = useState([]);
+  const [productList, setProductList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await FetchProduct("products", page);
+        setProductList(data.items);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, [page]);
+
+  const handleNextPage = () => {
+    setPage((prev) => prev + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // const { id } = useParams();
+  const [extraData, setExtraData] = useState([]);
+  const [mainImage, setMainImage] = useState("");
+
+  useEffect(() => {
+    if (productList) {
+      const filtered = productList.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [productList, searchQuery]);
+
+  const loadProductDetails = async (id) => {
+    try {
+      setLoading(true);
+      const data = await FetchSingleProduct(`products/${id}`);
+      setProduct(data);
+      setMainImage(data.photos[3].url);
+
+      const extraInfo = await FetchSingleProduct(`extrainfo/products/${id}`);
+      setExtraData(extraInfo);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleThumbnailClick = (imageUrl) => {
+    setMainImage(imageUrl);
   };
 
   return (
@@ -194,6 +271,22 @@ export const StoreProvider = ({ children }) => {
         handleLastNameChange,
         handlePhoneNumberChange,
         handleEmailChange,
+        products,
+        updateProducts,
+        product,
+        setProduct,
+        loading,
+        setLoading,
+        error,
+        setError,
+        page,
+        setPage,
+        handlePreviousPage,
+        handleNextPage,
+        filteredProducts,
+        loadProductDetails,
+        extraData,
+        mainImage, handleThumbnailClick, productList
       }}
     >
       {children}

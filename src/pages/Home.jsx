@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ItemCard from "../components/ItemCard";
 import {
   Box,
@@ -16,18 +16,66 @@ import { useStore } from "../components/StoreContext";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import {
-  Close,
-  HomeOutlined,
-  KeyboardArrowRight,
-  
-} from "@mui/icons-material";
+import { Close, HomeOutlined, KeyboardArrowRight } from "@mui/icons-material";
 import { alpha } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { FetchProduct } from "../constants/fetch";
 
-const Home = ({ items }) => {
-  const { addToCart } = useStore();
-  
+const Home = (/**{ items }*/) => {
+  const {
+    addToCart,
+    setCart,
+    cart,
+    product,
+    setProduct,
+    loading,
+    setLoading,
+    error,
+    setError,
+    page,
+    setPage,
+    handlePreviousPage,
+    handleNextPage,
+    filteredProducts,
+  } = useStore();
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const [page, setPage] = useState(1);
+
+  // useEffect(() => {
+  //   const loadProducts = async () => {
+  //     try {
+  //       const data = await FetchProduct("products", page);
+  //       setProduct(data.items);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   loadProducts();
+  // }, [page]);
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
+
+  // const handleNextPage = () => {
+  //   setPage((prev) => prev + 1);
+  // };
+
+  // const handlePreviousPage = () => {
+  //   setPage((prev) => Math.max(prev - 1, 1));
+  // };
+
+  // const {} = useStore()
+
+  // console.log(product);
   return (
     <Box sx={{ overflowX: "hidden" }}>
       <Navbar />
@@ -223,19 +271,25 @@ const Home = ({ items }) => {
               sx={{ paddingY: "50px", paddingRight: "40px" }}
               bgcolor={"#fff"}
             >
-              {items.map((item, index) => (
-                <Grid
-                  item
-                  lg={4}
-                  md={4}
-                  sm={6}
-                  xs={6}
-                  key={item.id}
-                  // sx={{ width: "20px" }}
-                >
-                  <ItemCard item={item} addToCart={addToCart} index={index}/>
-                </Grid>
-              ))}
+              {loading ? (
+                <div>Loading!!</div>
+              ) : filteredProducts && filteredProducts.length > 0 ? (
+                filteredProducts.map((item, index) => (
+                  <Grid
+                    item
+                    lg={4}
+                    md={4}
+                    sm={6}
+                    xs={12}
+                    key={item.id}
+                    // sx={{ width: "20px" }}
+                  >
+                    <ItemCard item={item} addToCart={addToCart} index={index} />
+                  </Grid>
+                ))
+              ) : (
+                <Typography>No item matches your search!</Typography>
+              )}
             </Grid>
             <Stack
               direction={"row"}
@@ -244,13 +298,23 @@ const Home = ({ items }) => {
               gap={2}
               marginBottom={4}
             >
-              <Typography
-                fontSize={"20px"}
-                fontWeight={300}
-                display={{ xs: "none", ss: "block" }}
+              <Button
+                variant="text"
+                sx={{
+                  bgcolor: "#FFF4C8",
+                  fontSize: { xs: "12px", ss: "20px" },
+                  fontWeight: 300,
+                  color: "#000",
+                  borderRadius: "7px",
+                  padding: 1,
+                  // width: {xs: "1px"}
+                  cursor: page === 1 ? "not-allowed" : "pointer",
+                }}
+                onClick={handlePreviousPage}
+                disabled={page === 1}
               >
-                Previous
-              </Typography>
+                Prev
+              </Button>
               <Button
                 variant="text"
                 sx={{
@@ -260,8 +324,10 @@ const Home = ({ items }) => {
                   color: "#000",
                   borderRadius: "7px",
                   padding: 1,
-                  // width: {xs: "1px"}
+                  // width: {xs: "1px"},
+                  display: {xs: "none", ss: "block"}
                 }}
+                onClick={() => setPage(1)}
               >
                 1
               </Button>
@@ -274,8 +340,10 @@ const Home = ({ items }) => {
                   color: "#000",
                   borderRadius: "7px",
                   padding: 1,
-                  // width: {xs: "1px"}
+                  // width: {xs: "1px"},
+                  display: {xs: "none", ss: "block"}
                 }}
+                onClick={() => setPage(2)}
               >
                 2
               </Button>
@@ -288,8 +356,10 @@ const Home = ({ items }) => {
                   color: "#000",
                   borderRadius: "7px",
                   padding: 1,
-                  // width: {xs: "1px"}
+                  // width: {xs: "1px"},
+                  display: {xs: "none", ss: "block"}
                 }}
+                onClick={() => setPage(3)}
               >
                 3
               </Button>
@@ -302,7 +372,9 @@ const Home = ({ items }) => {
                   color: "#000",
                   borderRadius: "7px",
                   padding: 1,
-                  // width: {xs: "1px"}
+                  cursor: "not-allowed",
+                  // width: {xs: "1px"},
+                  display: {xs: "none", md: "block"}
                 }}
               >
                 4
@@ -316,7 +388,9 @@ const Home = ({ items }) => {
                   color: "#000",
                   borderRadius: "7px",
                   padding: 1,
-                  // width: {xs: "1px"}
+                  cursor: "not-allowed",
+                  // width: {xs: "1px"},
+                  display: {xs: "none", md: "block"}
                 }}
               >
                 -
@@ -330,18 +404,53 @@ const Home = ({ items }) => {
                   color: "#000",
                   borderRadius: "7px",
                   padding: 1,
-                  // width: {xs: "1px"}
+                  cursor: "not-allowed",
+                  width: {xs: "10%"},
+                  display: {xs: "none", md: "block"}
                 }}
               >
                 5
               </Button>
-              <Typography
+              <Button
+                variant="text"
+                sx={{
+                  bgcolor: "#FFF4C8",
+                  fontSize: { xs: "12px", ss: "20px" },
+                  fontWeight: 300,
+                  color: "#000",
+                  borderRadius: "7px",
+                  padding: 1,
+                  // width: {xs: "1px"}
+                  cursor: page === 3 ? "not-allowed" : "pointer",
+                  display: {xs: "block", ss: "none"}
+                }}
+              >
+                {page}
+              </Button>
+              <Button
+                variant="text"
+                sx={{
+                  bgcolor: "#FFF4C8",
+                  fontSize: { xs: "12px", ss: "20px" },
+                  fontWeight: 300,
+                  color: "#000",
+                  borderRadius: "7px",
+                  padding: 1,
+                  // width: {xs: "1px"}
+                  cursor: page === 3 ? "not-allowed" : "pointer",
+                }}
+                onClick={handleNextPage}
+                disabled={page === 3}
+              >
+                Next
+              </Button>
+              {/* <Typography
                 fontSize={"20px"}
                 fontWeight={300}
                 display={{ xs: "none", ss: "block" }}
               >
                 Next
-              </Typography>
+              </Typography> */}
             </Stack>
           </Stack>
         </Stack>
