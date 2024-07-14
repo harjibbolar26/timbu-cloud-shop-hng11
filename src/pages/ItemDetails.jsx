@@ -52,6 +52,7 @@ const ItemDetailPage = () => {
   }
 
   //   console.log(extraData);
+    console.log(product);
 
   //   const image = product.photos[0].url;
 
@@ -87,8 +88,8 @@ const ItemDetailPage = () => {
               src={`https://api.timbu.cloud/images/${mainImage}`}
               alt={product.name}
               height={"65vh"}
-              // width={"90%"}
-              sx={{ objectFit: "contain" }}
+              width={"80%"}
+              // sx={{ objectFit: "contain" }}
             />
             <Stack direction={"row"} spacing={1} sx={{ maxWidth: "100vw" }}>
               {product && product.photos && Array.isArray(product.photos) ? (
@@ -105,6 +106,7 @@ const ItemDetailPage = () => {
                       width: { ss: 100, xs: 80 },
                       p: 1,
                       borderRadius: "10px",
+                      cursor: "pointer"
                     }}
                     onClick={() => handleThumbnailClick(image.url)}
                   />
@@ -177,6 +179,7 @@ const ItemDetailPage = () => {
                 }}
               >
                 {/* {extraData[0].value} */}
+                {product.extra_infos[0].value}
               </Typography>
             </Typography>
 

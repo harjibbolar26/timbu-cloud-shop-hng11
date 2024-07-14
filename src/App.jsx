@@ -12,6 +12,7 @@ import { Box } from "@mui/material";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ItemDetailPage from "./pages/ItemDetails";
+import Sideb from "./components/Side";
 
 function App() {
   return (
@@ -19,11 +20,12 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes>
-          <Route path="/" element={<Home /**items={items}*/ />} />
+          <Route path="/" element={<Home />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/products/:id" element={<ItemDetailPage />} />
         </Routes>
+          {/* <Sidebar/> */}
         {/* <Footer/> */}
       </ThemeProvider>
     </StoreProvider>

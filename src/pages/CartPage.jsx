@@ -55,7 +55,7 @@ const CartPage = () => {
 
   const otherDeliveryFees = 800 + 400 + 400 + 200;
 
-  // console.log(cart);
+  console.log(cart);
 
   return (
     <Box sx={{ overflowX: "hidden" }}>

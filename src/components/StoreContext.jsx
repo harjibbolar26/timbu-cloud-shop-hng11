@@ -213,7 +213,7 @@ export const StoreProvider = ({ children }) => {
       setLoading(true);
       const data = await FetchSingleProduct(`products/${id}`);
       setProduct(data);
-      setMainImage(data.photos[3].url);
+      setMainImage(data.photos[0].url);
 
       // const extraInfo = await FetchSingleProduct(`extrainfo/products/${id}`);
       // setExtraData(extraInfo);
@@ -227,6 +227,8 @@ export const StoreProvider = ({ children }) => {
   const handleThumbnailClick = (imageUrl) => {
     setMainImage(imageUrl);
   };
+
+
 
   return (
     <StoreContext.Provider
@@ -246,7 +248,7 @@ export const StoreProvider = ({ children }) => {
         selectedIndex,
         selectedPaymentIndex,
         handlePaymentChange,
-        setIsSidebarOpen,
+        setIsSidebarOpen, isSidebarOpen,
         toggleSidebar,
         searchQuery,
         handleSearchChange,

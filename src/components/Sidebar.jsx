@@ -62,13 +62,12 @@ const Sidebar = () => {
     toggleSidebar,
   } = useStore();
 
-  const SidebarContent = () => (
+  const SidebarContent = ({ isDrawer = false }) => (
     <Box
       component={"nav"}
       sx={{
         backgroundColor: "#FFF",
-        width: "300px",
-        // height: "100%",
+        width: isDrawer ? "100%" : "300px",
         overflowY: "auto",
         paddingY: "20px",
         paddingX: "20px",
@@ -76,17 +75,23 @@ const Sidebar = () => {
         "&::-webkit-scrollbar": {
           display: "none",
         },
-        borderRight: "1px solid #00000047",
-        marginBottom: "150px",
-        display: { xs: "none", lg: "block" },
+        borderRight: isDrawer ? "none" : "1px solid #00000047",
+        marginBottom: isDrawer ? 0 : "150px",
+        display: isDrawer ? "block" : { xs: "none", lg: "block" },
+        height: isDrawer ? "100%" : "auto",
       }}
     >
-      <Box sx={{ position: "relative", top: 100 }}>
+      <Box
+        sx={{
+          position: isDrawer ? "static" : "relative",
+          top: isDrawer ? 0 : 100,
+        }}
+      >
         <Box>
           <Typography
-            fontSize={"30px"}
+            fontSize={{ ss: "30px", sm: "24px", xs: "20px" }}
             fontWeight={500}
-            paddingLeft={"20px"}
+            paddingLeft={{ ss: "20px", xs: "10px" }}
             paddingTop={"30px"}
           >
             Category
@@ -97,7 +102,7 @@ const Sidebar = () => {
             justifyContent={"center"}
             // gap={1}
             marginTop={"20px"}
-            paddingLeft={"25px"}
+            paddingLeft={{ sm: "25px", xs: "10px" }}
           >
             {category &&
               category.map((item) => (
@@ -109,7 +114,10 @@ const Sidebar = () => {
                     }}
                     checked={item.label === "Tote Bags" ? true : false}
                   />
-                  <Typography fontSize={"18px"} fontWeight={300}>
+                  <Typography
+                    fontSize={{ sm: "18px", xs: "16px" }}
+                    fontWeight={300}
+                  >
                     {item.label}
                   </Typography>
                 </Stack>
@@ -125,9 +133,9 @@ const Sidebar = () => {
         />
         <Box>
           <Typography
-            fontSize={"30px"}
+            fontSize={{ ss: "30px", sm: "24px", xs: "20px" }}
             fontWeight={500}
-            paddingLeft={"20px"}
+            paddingLeft={{ ss: "20px", xs: "10px" }}
             paddingTop={"30px"}
           >
             Filter by:
@@ -139,7 +147,11 @@ const Sidebar = () => {
             // paddingRight={"20px"}
             paddingTop={"10px"}
           >
-            <Typography fontSize={"22px"} fontWeight={400} paddingLeft={"20px"}>
+            <Typography
+              fontSize={{ ss: "22px", sm: "20px", xs: "18px" }}
+              fontWeight={400}
+              paddingLeft={{ ss: "20px", xs: "10px" }}
+            >
               Type
             </Typography>
             <IconButton onClick={() => toggleSection("type")}>
@@ -156,7 +168,7 @@ const Sidebar = () => {
               alignItems={"start"}
               justifyContent={"center"}
               marginTop={"10px"}
-              paddingLeft={"25px"}
+              paddingLeft={{ sm: "25px", xs: "10px" }}
             >
               {type &&
                 type.map((item) => (
@@ -167,14 +179,17 @@ const Sidebar = () => {
                         "&.Mui-checked": { color: "#F9DD49" },
                       }}
                     />
-                    <Typography fontSize={"19px"} fontWeight={300}>
+                    <Typography
+                      fontSize={{ sm: "18px", xs: "16px" }}
+                      fontWeight={300}
+                    >
                       {item.label}
                     </Typography>
                   </Stack>
                 ))}
             </Stack>
           </Collapse>
-          <Box marginTop={"10px"} paddingLeft={"20px"}>
+          <Box marginTop={"10px"} paddingLeft={{ ss: "20px", xs: "10px" }}>
             <Stack
               direction={"row"}
               alignItems={"center"}
@@ -183,7 +198,7 @@ const Sidebar = () => {
               paddingTop={"10px"}
             >
               <Typography
-                fontSize={"22px"}
+                fontSize={{ ss: "22px", sm: "20px", xs: "18px" }}
                 fontWeight={400}
                 marginBottom={"10px"}
               >
@@ -222,7 +237,10 @@ const Sidebar = () => {
               justifyContent={"space-between"}
               paddingTop={"10px"}
             >
-              <Typography fontSize={"22px"} fontWeight={400}>
+              <Typography
+                fontSize={{ ss: "22px", sm: "20px", xs: "18px" }}
+                fontWeight={400}
+              >
                 Price
               </Typography>
               <IconButton onClick={() => toggleSection("price")}>
@@ -273,7 +291,7 @@ const Sidebar = () => {
               />
             </Collapse>
           </Box>
-          <Box marginTop={"10px"} paddingLeft={"20px"}>
+          <Box marginTop={"10px"} paddingLeft={{ ss: "20px", xs: "10px" }}>
             <Stack
               direction={"row"}
               alignItems={"center"}
@@ -282,7 +300,7 @@ const Sidebar = () => {
               paddingTop={"10px"}
             >
               <Typography
-                fontSize={"22px"}
+                fontSize={{ ss: "22px", sm: "20px", xs: "18px" }}
                 fontWeight={400}
                 marginBottom={"10px"}
               >
@@ -297,7 +315,7 @@ const Sidebar = () => {
               </IconButton>
             </Stack>
           </Box>
-          <Box marginTop={"10px"} paddingLeft={"20px"}>
+          <Box marginTop={"10px"} paddingLeft={{ ss: "20px", xs: "10px" }}>
             <Stack
               direction={"row"}
               alignItems={"center"}
@@ -305,7 +323,7 @@ const Sidebar = () => {
               paddingRight={"1px"}
             >
               <Typography
-                fontSize={"22px"}
+                fontSize={{ ss: "22px", sm: "20px", xs: "18px" }}
                 fontWeight={400}
                 marginBottom={"10px"}
               >
@@ -325,17 +343,20 @@ const Sidebar = () => {
               direction={"row"}
               alignItems={"center"}
               justifyContent={"start"}
-              gap={4}
+              gap={{ xs: 1, sm: 2, s: 3, lg: 4 }}
             >
               <Box
                 sx={{
                   bgcolor: "#F9DD49",
-                  paddingX: 4,
+                  paddingX: { ss: 4, xs: 2 },
                   paddingY: 1,
                   borderRadius: "10px",
                 }}
               >
-                <Typography fontSize={"22px"} fontWeight={400}>
+                <Typography
+                  fontSize={{ ss: "22px", sm: "20px", xs: "18px" }}
+                  fontWeight={400}
+                >
                   Apply
                 </Typography>
               </Box>
@@ -349,42 +370,65 @@ const Sidebar = () => {
   const theme = useTheme();
   const isBigScreen = useMediaQuery(theme.breakpoints.up("lg"));
   return (
-    // <>
-    //   {isBigScreen ? (
-    //     <Box component={"nav"}>{<SidebarContent />}</Box>
-    //   ) : (
-    //     <>
-    //       <IconButton
-    //         onClick={toggleSidebar}
-    //         sx={{ position: "fixed", top: 150, left: 20, m: 4, zIndex: 1000  }}
-    //       >
-    //         <Menu />
-    //       </IconButton>
-    //       <Drawer
-    //         anchor="left"
-    //         open={isSidebarOpen}
-    //         onClose={toggleSidebar}
-    //         PaperProps={{ sx: { width: "250px" } }}
-    //         ModalProps={{
-    //           BackdropProps: {
-    //             sx: {
-    //               backdropFilter: "blur(4px)",
-    //             },
-    //           },
-    //         }}
-    //       >
-    //         <IconButton
-    //           onClick={toggleSidebar}
-    //           sx={{ position: "fixed", top: 20, left: 20 }}
-    //         >
-    //           <Close />
-    //         </IconButton>
-    //         <SidebarContent />
-    //       </Drawer>
-    //     </>
-    //   )}
-    // </>
-    <SidebarContent/>
+    <>
+      {isBigScreen ? (
+        <Box component={"nav"}>{<SidebarContent />}</Box>
+      ) : (
+        <>
+          <IconButton
+            onClick={toggleSidebar}
+            sx={{
+              position: "fixed",
+              top: 40,
+              left: 25,
+              marginY: 5,
+              zIndex: 1000,
+            }}
+          >
+            <Box
+              component={"img"}
+              src="/hamburger.png"
+              sx={{
+                boxShadow: 3,
+                borderRadius: "10px",
+                p: 1,
+                bgcolor: "background.paper",
+              }}
+            />
+          </IconButton>
+          <Drawer
+            variant="temporary"
+            anchor="left"
+            open={isSidebarOpen}
+            onClose={toggleSidebar}
+            PaperProps={{ sx: { width: { ss: "250px", xs: "200px" } } }}
+            ModalProps={{
+              BackdropProps: {
+                sx: {
+                  backdropFilter: "blur(4px)",
+                },
+              },
+            }}
+          >
+            <IconButton
+              onClick={toggleSidebar}
+              sx={{
+                position: "fixed",
+                top: 10,
+                left: 10,
+                backgroundColor: "transparent",
+              }}
+            >
+              <Close />
+            </IconButton>
+            <Box sx={{ marginTop: "10px", height: "calc(100% - 20px)" }}>
+              <SidebarContent isDrawer={true} />
+            </Box>
+          </Drawer>
+        </>
+      )}
+    </>
+    // <SidebarContent/>
   );
 };
 

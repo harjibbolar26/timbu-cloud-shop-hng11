@@ -26,7 +26,7 @@ const Home = (/**{ items }*/) => {
     addToCart,
     setCart,
     cart,
-    product,
+    productList,
     setProduct,
     loading,
     setLoading,
@@ -75,24 +75,17 @@ const Home = (/**{ items }*/) => {
 
   // const {} = useStore()
 
-  // console.log(product);
+  console.log(productList);
   return (
     <Box sx={{ overflowX: "hidden" }}>
       <Navbar />
       <Stack direction={"row"}>
         <Sidebar />
-        {/* <Box
-          sx={{
-            width: "300px",
-            backgroundColor: "#f4f4f4",
-          }}
-        >
-        </Box> */}
         <Stack sx={{ width: "100%", overflowX: "hidden" }}>
           <Stack
             sx={{
               overflowY: "auto",
-              marginTop: { xs: 13, ss: 20 },
+              marginTop: { xs: 17, ss: 20 },
               marginLeft: 3,
             }}
           >
@@ -101,7 +94,7 @@ const Home = (/**{ items }*/) => {
               justifyContent={"start"}
               alignItems={"center"}
               gap={2}
-              marginBottom={3}
+              marginBottom={2}
             >
               <Box>
                 <HomeOutlined sx={{ fontSize: "40px" }} />
