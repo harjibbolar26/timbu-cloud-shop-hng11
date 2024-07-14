@@ -12,7 +12,6 @@ import { Box } from "@mui/material";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ItemDetailPage from "./pages/ItemDetails";
-import Sideb from "./components/Side";
 
 function App() {
   return (
