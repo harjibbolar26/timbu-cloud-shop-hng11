@@ -71,7 +71,8 @@ const Checkout = () => {
     return cart.reduce(
       (total, item) =>
         total +
-        (item.current_price[0].NGN[0] - item.current_price[0].NGN[0] * 0.3) *
+        // (item.current_price[0].NGN[0] - item.current_price[0].NGN[0] * 0.3) *
+        (item.current_price - item.current_price * 0.3) *
           item.quantity,
       0
     );

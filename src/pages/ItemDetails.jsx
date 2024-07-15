@@ -39,18 +39,6 @@ const ItemDetailPage = () => {
     }
   }, []);
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
-
-  if (!product) {
-    return <div>Product not found</div>;
-  }
-
   //   console.log(extraData);
   console.log(product);
 

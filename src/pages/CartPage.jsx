@@ -48,7 +48,8 @@ const CartPage = () => {
 
   const calculateTotal = () => {
     return cart.reduce(
-      (total, item) => total + (item.current_price[0].NGN[0] - item.current_price[0].NGN[0] * 0.3) * item.quantity,
+      // (total, item) => total + (item.current_price[0].NGN[0] - item.current_price[0].NGN[0] * 0.3) * item.quantity,
+      (total, item) => total + (item.current_price - item.current_price * 0.3) * item.quantity,
       0
     );
   };
@@ -325,7 +326,8 @@ const CartPage = () => {
                 ) : (
                   <Stack direction="column" spacing={2}>
                     {cart.map((item) => {
-                      const discountPrice = item.current_price[0].NGN[0] - 0.3 * item.current_price[0].NGN[0];
+                      // const discountPrice = item.current_price[0].NGN[0] - 0.3 * item.current_price[0].NGN[0];
+                      const discountPrice = item.current_price - 0.3 * item.current_price;
                       return (
                         <>
                           <Box
@@ -448,7 +450,8 @@ const CartPage = () => {
                                 <span
                                   style={{ textDecoration: "line-through" }}
                                 >
-                                  &#8358; {item.current_price[0].NGN[0]}
+                                  {/* &#8358; {item.current_price[0].NGN[0]} */}
+                                  &#8358; {item.current_price}
                                 </span>{" "}
                                 <Typography
                                   component="span"

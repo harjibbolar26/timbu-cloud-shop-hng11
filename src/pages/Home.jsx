@@ -75,7 +75,7 @@ const Home = (/**{ items }*/) => {
 
   // const {} = useStore()
 
-  console.log(productList);
+  // console.log(productList);
   return (
     <Box sx={{ overflowX: "hidden" }}>
       <Navbar />
