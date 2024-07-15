@@ -31,13 +31,46 @@ const ItemDetailPage = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    setLoading(true);
-    try {
-      loadProductDetails(id);
-    } catch (error) {
-      setError(error.message);
-    }
-  }, []);
+    const fetchProduct = async () => {
+      setLoading(true);
+      try {
+        await loadProductDetails(id);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id, loadProductDetails, setLoading, setError]);
+
+  if (loading) {
+    return (
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 'calc(100vh - 64px)', 
+        width: '100%',
+        textAlign: 'center',
+        padding: '20px'
+      }}>
+        <Typography>
+          Loading... Please wait while we fetch the product details.
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return <Typography>Error: {error}</Typography>;
+  }
+
+  if (!product || Object.keys(product).length === 0) {
+    return <Typography>No product data available</Typography>;
+  }
+
 
   //   console.log(extraData);
   console.log(product);

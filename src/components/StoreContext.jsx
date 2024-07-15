@@ -1,5 +1,5 @@
 // src/CartContext.js
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect, useContext, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FetchProduct, FetchSingleProduct } from "../constants/fetch";
 // import FetchProduct from "../constants/fetch";
@@ -208,21 +208,19 @@ export const StoreProvider = ({ children }) => {
     }
   }, [productList, searchQuery]);
 
-  const loadProductDetails = async (id) => {
+  const loadProductDetails = useCallback(async (id) => {
     try {
       setLoading(true);
       const data = await FetchSingleProduct(`products/${id}`);
       setProduct(data);
       setMainImage(data.photos[0].url);
-
-      // const extraInfo = await FetchSingleProduct(`extrainfo/products/${id}`);
-      // setExtraData(extraInfo);
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+  
 
   const handleThumbnailClick = (imageUrl) => {
     setMainImage(imageUrl);
