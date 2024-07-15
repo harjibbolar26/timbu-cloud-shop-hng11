@@ -65,6 +65,9 @@ const Checkout = () => {
     handleLastNameChange,
     handlePhoneNumberChange,
     handleEmailChange,
+    isValidName,
+    isValidPhone,
+    isValidEmail, isFormValid
   } = useStore();
   const navigate = useNavigate();
 
@@ -209,6 +212,14 @@ const Checkout = () => {
                                 <TextField
                                   value={firstName}
                                   onChange={handleFirstNameChange}
+                                  error={
+                                    firstName === "" && !isValidName(firstName)
+                                  }
+                                  helperText={
+                                    firstName === "" && !isValidName(firstName)
+                                      ? "Please enter a valid firstname"
+                                      : ""
+                                  }
                                   size="small"
                                   sx={{
                                     fontSize: { xs: "18px", md: "24px" },
@@ -270,6 +281,14 @@ const Checkout = () => {
                                 <TextField
                                   value={lastName}
                                   onChange={handleLastNameChange}
+                                  error={
+                                    lastName === "" && !isValidName(lastName)
+                                  }
+                                  helperText={
+                                    lastName === "" && !isValidName(lastName)
+                                      ? "Please enter a valid lastname"
+                                      : ""
+                                  }
                                   size="small"
                                   sx={{
                                     fontSize: { xs: "18px", md: "24px" },
@@ -331,6 +350,16 @@ const Checkout = () => {
                                 <TextField
                                   value={phoneNumber}
                                   onChange={handlePhoneNumberChange}
+                                  error={
+                                    phoneNumber === "" &&
+                                    !isValidPhone(phoneNumber)
+                                  }
+                                  helperText={
+                                    phoneNumber === "" &&
+                                    !isValidName(phoneNumber)
+                                      ? "Please enter a valid phone number"
+                                      : ""
+                                  }
                                   size="small"
                                   sx={{
                                     fontSize: { xs: "18px", md: "24px" },
@@ -392,6 +421,12 @@ const Checkout = () => {
                                 <TextField
                                   value={email}
                                   onChange={handleEmailChange}
+                                  error={email === "" && !isValidEmail(email)}
+                                  helperText={
+                                    email === "" && !isValidEmail(email)
+                                      ? "Please enter a valid email address"
+                                      : ""
+                                  }
                                   size="small"
                                   sx={{
                                     fontSize: { xs: "18px", md: "24px" },
@@ -792,7 +827,7 @@ const Checkout = () => {
                         color: "#000",
                         // marginLeft: "400px",
                       }}
-                      disabled={cart.length === 0}
+                      disabled={cart.length === 0 || !isFormValid()}
                       onClick={handlePayment}
                     >
                       Pay
@@ -840,7 +875,7 @@ const Checkout = () => {
                     borderRadius: "10px",
                     color: "#000",
                   }}
-                  disabled={cart.length === 0}
+                  disabled={cart.length === 0 || !isFormValid()}
                   onClick={handlePayment}
                 >
                   Pay

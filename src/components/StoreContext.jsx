@@ -1,5 +1,11 @@
 // src/CartContext.js
-import React, { createContext, useState, useEffect, useContext, useCallback } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FetchProduct, FetchSingleProduct } from "../constants/fetch";
 // import FetchProduct from "../constants/fetch";
@@ -128,7 +134,20 @@ export const StoreProvider = ({ children }) => {
   };
 
   const toggleEditUserInfo = () => {
-    setEditUserInfo(!editUserInfo);
+    if (editUserInfo) {
+      if (
+        isValidName(firstName) &&
+        isValidName(lastName) &&
+        isValidPhone(phoneNumber) &&
+        isValidEmail(email)
+      ) {
+        setEditUserInfo(false);
+      } else {
+        alert("Please correct all fields before saving.");
+      }
+    } else {
+      setEditUserInfo(true);
+    }
   };
 
   const handleHomeChange = (event) => {
@@ -139,20 +158,37 @@ export const StoreProvider = ({ children }) => {
     setPhone(event.target.value);
   };
 
+  const isValidName = (name) => /^[a-zA-Z\s-]+$/.test(name);
+  const isValidPhone = (phone) => /^\d+$/.test(phone);
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   const handleAddressChange = (event) => {
     setAddress(event.target.value);
   };
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
+
+  const handleFirstNameChange = (e) => {
+    const value = e.target.value;
+    if (value === "" || isValidName(value)) {
+      setFirstName(value);
+    }
   };
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
+  const handleLastNameChange = (e) => {
+    const value = e.target.value;
+    if (value === "" || isValidName(value)) {
+      setLastName(value);
+    }
   };
-  const handlePhoneNumberChange = (event) => {
-    setPhoneNumber(event.target.value);
+
+  const handlePhoneNumberChange = (e) => {
+    const value = e.target.value;
+    if (value === "" || isValidPhone(value)) {
+      setPhoneNumber(value);
+    }
   };
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
   };
 
   const [isFavorite, setIsFavorite] = useState({});
@@ -220,13 +256,19 @@ export const StoreProvider = ({ children }) => {
       setLoading(false);
     }
   }, []);
-  
 
   const handleThumbnailClick = (imageUrl) => {
     setMainImage(imageUrl);
   };
 
-
+  const isFormValid = () => {
+    return (
+      isValidName(firstName) &&
+      isValidName(lastName) &&
+      isValidPhone(phoneNumber) &&
+      isValidEmail(email)
+    );
+  };
 
   return (
     <StoreContext.Provider
@@ -246,7 +288,8 @@ export const StoreProvider = ({ children }) => {
         selectedIndex,
         selectedPaymentIndex,
         handlePaymentChange,
-        setIsSidebarOpen, isSidebarOpen,
+        setIsSidebarOpen,
+        isSidebarOpen,
         toggleSidebar,
         searchQuery,
         handleSearchChange,
@@ -286,7 +329,13 @@ export const StoreProvider = ({ children }) => {
         filteredProducts,
         loadProductDetails,
         extraData,
-        mainImage, handleThumbnailClick, productList
+        mainImage,
+        handleThumbnailClick,
+        productList,
+        isValidName,
+        isValidPhone,
+        isValidEmail,
+        isFormValid,
       }}
     >
       {children}
