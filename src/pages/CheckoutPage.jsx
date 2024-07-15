@@ -34,6 +34,7 @@ import {
 } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PaymentModal from "../components/PaymentModal";
 
 const Checkout = () => {
   const {
@@ -78,6 +79,13 @@ const Checkout = () => {
   };
 
   const otherDeliveryFees = 800 + 400 + 400 + 200;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handlePayment = () => {
+    setIsModalOpen(true);
+    setCart([]);
+  };
 
   const items = [
     {
@@ -222,7 +230,6 @@ const Checkout = () => {
                               )}
                             </Stack>
                           </Box>
-                          
                         </Box>
                         <hr
                           style={{
@@ -284,7 +291,6 @@ const Checkout = () => {
                               )}
                             </Stack>
                           </Box>
-                          
                         </Box>
                         <hr
                           style={{
@@ -346,7 +352,6 @@ const Checkout = () => {
                               )}
                             </Stack>
                           </Box>
-                          
                         </Box>
                         <hr
                           style={{
@@ -408,7 +413,6 @@ const Checkout = () => {
                               )}
                             </Stack>
                           </Box>
-                          
                         </Box>
                         <hr
                           style={{
@@ -762,7 +766,10 @@ const Checkout = () => {
                         Total
                       </Typography>
                       <Typography fontSize={"20px"} fontWeight={400}>
-                        &#8358; {calculateTotal() + otherDeliveryFees}
+                        &#8358; &nbsp;
+                        {cart.length === 0
+                          ? "0"
+                          : calculateTotal() + otherDeliveryFees}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -789,6 +796,7 @@ const Checkout = () => {
                         // marginLeft: "400px",
                       }}
                       disabled={cart.length === 0}
+                      onClick={handlePayment}
                     >
                       Pay
                     </Button>
@@ -808,7 +816,10 @@ const Checkout = () => {
                   Total
                 </Typography>
                 <Typography fontSize={"16px"} fontWeight={500}>
-                  &#8358; {calculateTotal() + otherDeliveryFees}
+                  &#8358; &nbsp;
+                  {cart.length === 0
+                    ? "0"
+                    : calculateTotal() + otherDeliveryFees}
                 </Typography>
               </Stack>
               <Box
@@ -833,6 +844,7 @@ const Checkout = () => {
                     color: "#000",
                   }}
                   disabled={cart.length === 0}
+                  onClick={handlePayment}
                 >
                   Pay
                 </Button>
@@ -840,6 +852,12 @@ const Checkout = () => {
             </Box>
           </Box>
         </Box>
+        <PaymentModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          deliveryInfo={{ home, address, phone }}
+          contactInfo={{ firstName, lastName, phoneNumber, email }}
+        />
       </Box>
       <Footer />
     </Box>

@@ -265,7 +265,20 @@ const Home = (/**{ items }*/) => {
               bgcolor={"#fff"}
             >
               {loading ? (
-                <div>Loading!!</div>
+                <Box sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 'calc(60vh - 64px)', 
+                  width: '100%',
+                  textAlign: 'center',
+                  padding: '20px'
+                }}>
+                  <Typography>
+                    Loading... Please wait while we fetch the products
+                  </Typography>
+                </Box>
+              
               ) : filteredProducts && filteredProducts.length > 0 ? (
                 filteredProducts.map((item, index) => (
                   <Grid

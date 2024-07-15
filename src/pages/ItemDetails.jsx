@@ -39,20 +39,20 @@ const ItemDetailPage = () => {
     }
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   if (!product) {
     return <div>Product not found</div>;
   }
 
   //   console.log(extraData);
-    console.log(product);
+  console.log(product);
 
   //   const image = product.photos[0].url;
 
@@ -62,7 +62,20 @@ const ItemDetailPage = () => {
         <Navbar />
       </Box>
       {loading ? (
-        <div>Loading!!</div>
+        <Box sx={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'calc(100vh - 64px)', 
+    width: '100%',
+    textAlign: 'center',
+    padding: '20px'
+  }}>
+    <Typography>
+      Loading... Please wait while we fetch the product details.
+    </Typography>
+  </Box>
+
       ) : (
         <Box
           sx={{
@@ -89,7 +102,7 @@ const ItemDetailPage = () => {
               alt={product.name}
               height={"65vh"}
               width={"80%"}
-              // sx={{ objectFit: "contain" }}
+              sx={{ objectFit: "contain" }}
             />
             <Stack direction={"row"} spacing={1} sx={{ maxWidth: "100vw" }}>
               {product && product.photos && Array.isArray(product.photos) ? (
@@ -101,12 +114,12 @@ const ItemDetailPage = () => {
                     alt={image.name}
                     height={"10vh"}
                     sx={{
-                      border: "1px solid black",
+                      // border: "1px solid black",
                       objectFit: "contain",
-                      width: { ss: 100, xs: 80 },
-                      p: 1,
+                      width: { ss: 100, xs: "100%" },
+                      // p: 1,
                       borderRadius: "10px",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                     onClick={() => handleThumbnailClick(image.url)}
                   />
