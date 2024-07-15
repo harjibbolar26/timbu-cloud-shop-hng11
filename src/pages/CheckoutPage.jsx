@@ -35,6 +35,7 @@ import {
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PaymentModal from "../components/PaymentModal";
+import { price } from "../constants/constants";
 
 const Checkout = () => {
   const {
@@ -68,15 +69,10 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   const calculateTotal = () => {
-    return cart.reduce(
-      (total, item) =>
-        total +
-        (item.current_price[0].NGN[0] - item.current_price[0].NGN[0] * 0.3) *
-        // (item.current_price - item.current_price * 0.3) *
-          item.quantity,
-      0
-    );
-    // .toFixed(2);
+    return cart.reduce((total, item, index) => {
+      const itemPrice = price[index % price.length];
+      return total + (itemPrice - itemPrice * 0.3) * item.quantity;
+    }, 0);
   };
 
   const otherDeliveryFees = 800 + 400 + 400 + 200;

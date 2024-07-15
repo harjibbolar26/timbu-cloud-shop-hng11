@@ -59,7 +59,7 @@ const ItemCard = ({ item, addToCart, index }) => {
             marginBottom: { xs: 1, ss: 2 },
           }}
         >
-          <MuiLink component={Link} to={`/products/${item.id}`}>
+          <MuiLink component={Link} to={`/products/${item.id}`} sx={{color: "#000", textDecoration: 'none', ":hover": {color: "blue"}}}>
             {item.name}
           </MuiLink>
         </Typography>

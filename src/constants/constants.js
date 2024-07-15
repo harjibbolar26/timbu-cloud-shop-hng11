@@ -11,7 +11,7 @@ export const items = [
     name: "Aesthetic Butterfly",
     price: 6500,
     image: "/bag2.png",
-    bgColor:   "#F8D498CC",
+    bgColor: "#F8D498CC",
   },
   {
     id: 3,
@@ -41,4 +41,10 @@ export const items = [
     image: "/bag6.png",
     bgColor: "#EEBAACCC",
   },
+];
+
+export const price = [
+  7000, 7200, 7800, 8600, 8900, 9000, 10000, 10100, 10700, 11100, 5500, 6600, 7200,
+  8000, 8200, 8600, 8800, 8800, 9200, 10000, 4500, 6000, 6300, 7000, 7500, 7600,
+  7700, 9100, 9500, 10700,
 ];

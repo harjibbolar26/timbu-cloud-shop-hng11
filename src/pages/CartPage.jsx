@@ -27,6 +27,7 @@ import {
 } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { price } from "../constants/constants";
 
 const CartPage = () => {
   const {
@@ -47,11 +48,10 @@ const CartPage = () => {
   const navigate = useNavigate();
 
   const calculateTotal = () => {
-    return cart.reduce(
-      (total, item) => total + (item.current_price[0].NGN[0] - item.current_price[0].NGN[0] * 0.3) * item.quantity,
-      // (total, item) => total + (item.current_price - item.current_price * 0.3) * item.quantity,
-      0
-    );
+    return cart.reduce((total, item, index) => {
+      const itemPrice = price[index % price.length];
+      return total + (itemPrice - itemPrice * 0.3) * item.quantity;
+    }, 0);
   };
 
   const otherDeliveryFees = 800 + 400 + 400 + 200;
@@ -325,9 +325,14 @@ const CartPage = () => {
                   </Typography>
                 ) : (
                   <Stack direction="column" spacing={2} key={cart[0].id}>
-                    {cart.map((item) => {
-                      const discountPrice = item.current_price[0].NGN[0] - 0.3 * item.current_price[0].NGN[0];
+                    {cart.map((item, index) => {
+                      // const discountPrice = item.current_price[0].NGN[0] - 0.3 * item.current_price[0].NGN[0];
                       // const discountPrice = item.current_price - 0.3 * item.current_price;
+                      // const dist = price.map((pr) => (
+                      //   pr - 0.3 * pr
+                      // ))
+                      const itemPrice = price[index % price.length];
+                      const discountPrice = itemPrice - 0.3 * itemPrice;
                       return (
                         <>
                           <Box
@@ -435,33 +440,17 @@ const CartPage = () => {
                               direction="column"
                               alignItems="end"
                               marginTop={2}
-                            >
-                              <Typography
-                                fontSize={{ xs: "16px", ss: "25px" }}
-                                fontWeight={500}
-                              >
-                                &#8358; {discountPrice * item.quantity}
-                              </Typography>
-                              <Typography
-                                fontSize={{ xs: "10px", md: "14px" }}
-                                fontWeight={500}
-                                color={alpha("#000", 0.5)}
-                              >
-                                <span
-                                  style={{ textDecoration: "line-through" }}
-                                >
-                                  &#8358; {item.current_price[0].NGN[0]}
-                                  {/* &#8358; {item.current_price} */}
-                                </span>{" "}
-                                <Typography
-                                  component="span"
-                                  fontSize={{ xs: "10px", md: "14px" }}
-                                  fontWeight={500}
-                                  sx={{ textDecoration: "none" }}
-                                >
-                                  30% off
-                                </Typography>
-                              </Typography>
+                            > <Typography fontSize={{ xs: "16px", ss: "25px" }} fontWeight={500}>
+                            &#8358; {discountPrice * item.quantity}
+                          </Typography>
+                          <Typography fontSize={{ xs: "10px", md: "14px" }} fontWeight={500} color={alpha("#000", 0.5)}>
+                            <span style={{ textDecoration: "line-through" }}>
+                              &#8358; {itemPrice}
+                            </span>{" "}
+                            <Typography component="span" fontSize={{ xs: "10px", md: "14px" }} fontWeight={500} sx={{ textDecoration: "none" }}>
+                              30% off
+                            </Typography>
+                          </Typography>
                             </Stack>
                           </Box>
                           <hr />
