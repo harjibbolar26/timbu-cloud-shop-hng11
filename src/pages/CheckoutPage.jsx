@@ -67,7 +67,8 @@ const Checkout = () => {
     handleEmailChange,
     isValidName,
     isValidPhone,
-    isValidEmail, isFormValid
+    isValidEmail,
+    isFormValid,
   } = useStore();
   const navigate = useNavigate();
 
@@ -886,7 +887,9 @@ const Checkout = () => {
         </Box>
         <PaymentModal
           open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {
+            setIsModalOpen(false); navigate("/");
+          }}
           deliveryInfo={{ home, address, phone }}
           contactInfo={{ firstName, lastName, phoneNumber, email }}
         />

@@ -20,11 +20,12 @@ import { Close, HomeOutlined, KeyboardArrowRight } from "@mui/icons-material";
 import { alpha } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { FetchProduct } from "../constants/fetch";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const {
     addToCart,
-    loading,
+    loading, error,
     page,
     setPage,
     handlePreviousPage,
@@ -224,15 +225,18 @@ const Home = () => {
               {loading ? (
                 <Box sx={{
                   display: 'flex',
+                  flexDirection: "column",
                   justifyContent: 'center',
                   alignItems: 'center',
+                  gap: 2,
                   height: 'calc(60vh - 64px)', 
                   width: '100%',
                   textAlign: 'center',
                   padding: '20px'
                 }}>
+                  <Loader/>
                   <Typography>
-                    Loading... Please wait while we fetch the products
+                    Please wait while we fetch the products
                   </Typography>
                 </Box>
               
@@ -251,7 +255,7 @@ const Home = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography>No item matches your search!</Typography>
+                <Typography>{error ? error : "No item matches your search!"}</Typography>
               )}
             </Grid>
             <Stack

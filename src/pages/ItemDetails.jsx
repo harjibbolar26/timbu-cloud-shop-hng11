@@ -13,6 +13,7 @@ import { useStore } from "../components/StoreContext";
 import { FetchSingleProduct } from "../constants/fetch";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Loader from "../components/Loader";
 
 const ItemDetailPage = () => {
   const navigate = useNavigate();
@@ -48,19 +49,20 @@ const ItemDetailPage = () => {
 
   if (loading) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 64px)",
-          width: "100%",
-          textAlign: "center",
-          padding: "20px",
-        }}
-      >
+      <Box sx={{
+        display: 'flex',
+        flexDirection: "column",
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 2,
+        height: '100vh', 
+        width: '100%',
+        textAlign: 'center',
+        padding: '20px'
+      }}>
+        <Loader/>
         <Typography>
-          Loading... Please wait while we fetch the product details.
+          Please wait while we fetch the product details
         </Typography>
       </Box>
     );
@@ -88,17 +90,18 @@ const ItemDetailPage = () => {
         <Box
           sx={{
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            height: "calc(100vh - 64px)",
+            gap: 2,
+            height: "calc(60vh - 64px)",
             width: "100%",
             textAlign: "center",
             padding: "20px",
           }}
         >
-          <Typography>
-            Loading... Please wait while we fetch the product details.
-          </Typography>
+          <Loader />
+          <Typography>Please wait while we fetch the product details</Typography>
         </Box>
       ) : (
         <Box
