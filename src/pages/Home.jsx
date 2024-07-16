@@ -21,59 +21,16 @@ import { alpha } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { FetchProduct } from "../constants/fetch";
 
-const Home = (/**{ items }*/) => {
+const Home = () => {
   const {
     addToCart,
-    setCart,
-    cart,
-    productList,
-    setProduct,
     loading,
-    setLoading,
-    error,
-    setError,
     page,
     setPage,
     handlePreviousPage,
     handleNextPage,
     filteredProducts,
   } = useStore();
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const [page, setPage] = useState(1);
-
-  // useEffect(() => {
-  //   const loadProducts = async () => {
-  //     try {
-  //       const data = await FetchProduct("products", page);
-  //       setProduct(data.items);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   loadProducts();
-  // }, [page]);
-
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
-
-  // const handleNextPage = () => {
-  //   setPage((prev) => prev + 1);
-  // };
-
-  // const handlePreviousPage = () => {
-  //   setPage((prev) => Math.max(prev - 1, 1));
-  // };
-
-  // const {} = useStore()
 
   // console.log(productList);
   return (
@@ -450,53 +407,12 @@ const Home = (/**{ items }*/) => {
               >
                 Next
               </Button>
-              {/* <Typography
-                fontSize={"20px"}
-                fontWeight={300}
-                display={{ xs: "none", ss: "block" }}
-              >
-                Next
-              </Typography> */}
             </Stack>
           </Stack>
         </Stack>
       </Stack>
       <Footer />
-      {/* <>
-        {isLargeScreen ? (
-          <Box component={"nav"}>{<Sidebar />}</Box>
-        ) : (
-          <>
-            <IconButton
-              onClick={toggleSidebar}
-              sx={{ position: "fixed", top: 50, left: 20 }}
-            >
-              <Menu />
-            </IconButton>
-            <Drawer
-              anchor="left"
-              open={isSidebarOpen}
-              onClose={toggleSidebar}
-              PaperProps={{ sx: { width: "250px" } }}
-              ModalProps={{
-                BackdropProps: {
-                  sx: {
-                    backdropFilter: "blur(4px)",
-                  },
-                },
-              }}
-            >
-              <IconButton
-                onClick={toggleSidebar}
-                sx={{ position: "fixed", top: 20, left: 20 }}
-              >
-                <Close />
-              </IconButton>
-              <Sidebar />
-            </Drawer>
-          </>
-        )}
-      </> */}
+    
     </Box>
   );
 };

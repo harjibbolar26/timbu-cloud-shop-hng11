@@ -2,15 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
-  Card,
-  CardContent,
-  CardMedia,
   Typography,
-  Grid,
   Box,
   IconButton,
   Stack,
-  Collapse,
   alpha,
   TextField,
 } from "@mui/material";
@@ -326,11 +321,6 @@ const CartPage = () => {
                 ) : (
                   <Stack direction="column" spacing={2} key={cart[0].id}>
                     {cart.map((item, index) => {
-                      // const discountPrice = item.current_price[0].NGN[0] - 0.3 * item.current_price[0].NGN[0];
-                      // const discountPrice = item.current_price - 0.3 * item.current_price;
-                      // const dist = price.map((pr) => (
-                      //   pr - 0.3 * pr
-                      // ))
                       const itemPrice = price[index % price.length];
                       const discountPrice = itemPrice - 0.3 * itemPrice;
                       return (

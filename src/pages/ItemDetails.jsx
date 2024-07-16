@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -15,6 +15,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const ItemDetailPage = () => {
+  const navigate = useNavigate();
   const {
     addToCart,
     loadProductDetails,
@@ -47,15 +48,17 @@ const ItemDetailPage = () => {
 
   if (loading) {
     return (
-      <Box sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 'calc(100vh - 64px)', 
-        width: '100%',
-        textAlign: 'center',
-        padding: '20px'
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 64px)",
+          width: "100%",
+          textAlign: "center",
+          padding: "20px",
+        }}
+      >
         <Typography>
           Loading... Please wait while we fetch the product details.
         </Typography>
@@ -71,7 +74,6 @@ const ItemDetailPage = () => {
     return <Typography>No product data available</Typography>;
   }
 
-
   //   console.log(extraData);
   console.log(product);
 
@@ -83,20 +85,21 @@ const ItemDetailPage = () => {
         <Navbar />
       </Box>
       {loading ? (
-        <Box sx={{
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 'calc(100vh - 64px)', 
-    width: '100%',
-    textAlign: 'center',
-    padding: '20px'
-  }}>
-    <Typography>
-      Loading... Please wait while we fetch the product details.
-    </Typography>
-  </Box>
-
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "calc(100vh - 64px)",
+            width: "100%",
+            textAlign: "center",
+            padding: "20px",
+          }}
+        >
+          <Typography>
+            Loading... Please wait while we fetch the product details.
+          </Typography>
+        </Box>
       ) : (
         <Box
           sx={{
@@ -263,7 +266,10 @@ const ItemDetailPage = () => {
 
             <Button
               variant="contained"
-              onClick={() => addToCart(product)}
+              onClick={() => {
+                addToCart(product);
+                navigate("/cart");
+              }}
               sx={{
                 width: { lg: "30%", ss: "50%" },
                 mx: "25%",
